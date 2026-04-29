@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    use HasFactory;
-
-    // Tell Laravel your table name
-    protected $table = 'service';
-
-    // Tell Laravel your primary key
-    protected $primaryKey = 'service_id';
-
-    // Allow mass assignment
     protected $fillable = [
-        'name',
-        'duration',
+        'service_name',
+        'description',
         'price',
-        'active_status'
+        'duration',
     ];
+
+    // One service has many appointments
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    // Many-to-many with therapists
+    public function therapists()
+    {
+        return $this->belongsToMany(Therapist::class, 'service_therapist');
+    }
 }
