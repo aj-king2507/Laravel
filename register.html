@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Register - Opal Glow</title>
+        <meta name="author" content="Heena"/>
+        <meta name="keywords" content="Opal Glow, Beauty Salon, Skin care, Hair spa, Body care, Mauritius, Glow treatment"/>
+        <meta name="description" content="Opal Glow beauty salon offers premium skin, hair and body care treatments to help you look and feel your glowing best."/>
+        <meta charset="utf-8"/>
+        <meta name="robots" content="index, follow, archive"/>
+        <link rel="stylesheet" href="register.css">
+        <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <div class="split-container">
+        <div class="left-side">
+        <img src="registration_image.jpg" alt="Woman receiving Japanese head massage at Opal Glow salon">
+
+</div>
+
+<div class="right-side">
+    <div class="back-home">
+            <a href="homepage.html">&larr; Homepage</a>
+</div>
+
+<h2 class="title">Create Your <span>Glow</span></h2>
+<p class="subtitle">Let Your Glow For Skin, Hair And Body Begin.</p>
+
+<form action="#" method="POST" class="registration-form" id="registerForm" novalidate>
+    <label for="name">Your Name</label>
+    <input type="text" id="name" name="name" required>
+    <small id="nameError" style="color:red;"></small>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+    <small id="emailError" style="color:red;"></small>
+
+    <label for="pwd">Password</label>
+    <input type="password" id="pwd" name="pwd" minlength="8" required>
+    <small id="pwdError" style="color:red;"></small>
+
+    <label for="confirm_pwd">Confirm Password</label>
+    <input type="password" id="confirm_pwd" name="confirm_pwd" minlength="8" required>
+    <small id="confirmError" style="color:red;"></small>
+
+    <button type="submit" class="register-btn">Register</button>
+</form>
+<p class="login-text">
+    Already have an account? <a href="login.html">Login</a>
+</p>
+
+</div>
+
+<!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ 
+  <script>
+    $(document).ready(function(){
+        //LIVE VALIDATION WHEN USER TYPES
+        $("#registerForm input").on("keyup", function(){
+            
+            let name = $("#name").val().trim();
+            let email = $("#email").val().trim();
+            let password = $("#pwd").val();
+            let confirmPassword = $("#confirm_pwd").val();
+
+        //NAME CHECK - only letters
+        let namePattern = /^[A-Za-z\s]+$/;
+
+        if(name === ""){
+            $("#nameError").text("Name is required");
+        } else if(name.length < 3){
+            $("#nameError").text("Name must be at least 3 letters");
+        } else if(!name.match(namePattern)){
+            $("#nameError").text("Only letters and spaces are allowed");
+        } else {
+            $("#nameError").text("");
+        }
+        
+        //EMAIL CHECK
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+        if(email === ""){
+            $("#emailError").text("Email is required");
+        } else if(!email.match(emailPattern)){
+            $("#emailError").text("Email must be in the format: name@example.com");
+        } else {
+            $("#emailError").text("");
+        }
+
+        //PASSWORD CHECK - strong
+        let strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}$/;
+
+        if(password === ""){
+            $("#pwdError").text("Password is required");
+        } else if (!password.match(strongPattern)){
+            $("#pwdError").text("Password must be 8+ chars with uppercase, lowercase, number and special char");
+        } else {
+            $("#pwdError").text("");
+        }
+        
+        //CONFIRM PASSWORD CHECK
+        if(confirmPassword === ""){
+            $("#confirmError").text("Please confirm your Password");
+        } else if(password !== confirmPassword){
+            $("#confirmError").text("Passwords do not match");
+        } else {
+            $("#confirmError").text("");
+        }
+
+        });
+
+        //PREVENT FORM SUBMISSION IF ERRORS EXIST
+        $("#registerForm").submit(function(e){
+
+            //RECHECK VALUES
+            let name = $("#name").val().trim();
+            let email = $("#email").val().trim();
+            let password = $("#pwd").val();
+            let confirmPassword = $("#confirm_pwd").val();
+
+            let namePattern = /^[A-Za-z\s]+$/;
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            let strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}$/;
+
+            if(
+                name === "" ||
+                name.length < 3 ||
+                !name.match(namePattern) ||
+                email === "" ||
+                !email.match(emailPattern) ||
+                password === "" ||
+                !password.match(strongPattern) ||
+                confirmPassword === "" ||
+                password !== confirmPassword
+            ){
+                e.preventDefault(); //stop form submission
+            }
+
+        });      
+    });
+  </script>
+</body>
+</html>
