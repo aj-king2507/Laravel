@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Opal Glow Appointment Form</title>
+        <meta name="author" content="Heena"/>
+        <meta name="keywords" content="Opal Glow, Beauty Salon, Skin care, Hair spa, Body care, Mauritius, Glow treatment"/>
+        <meta name="description" content="Opal Glow beauty salon offers premium skin, hair and body care treatments to help you look and feel your glowing best."/>
+        <meta charset="utf-8"/>
+        <meta name="robots" content="index, follow, archive"/>
+        <link rel="stylesheet" href="booking.css">
+        <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    
+    <div class="background"></div>
+
+    <div class="form-container">
+        <div class="back-home">
+            <a href="homepage.html">&larr; Homepage</a>
+        </div>
+
+        <h1><span>Opal Glow</span> Appointment Form</h1>
+        <p class="subtitle">Please fill out the form below, it only takes 3 minutes.</p>
+
+        <div id="loader" style="display:none; text-align:center; font-weight:bold; color:red; font-size:18px;">
+            Loading Services...
+        </div>
+
+        <div id="formMessage" style="display:none; text-align:center; font-weight:bold; color:green; font-size:18px;"></div>
+
+        <form action="#" method="POST" class="appointment-form" id="bookingForm" novalidate>
+
+            <div class="two-col">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <small id="nameError" style="color:red;"></small>
+
+                </div>
+            
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <small id="emailError" style="color:red;"></small>
+
+                </div>
+            </div>
+
+<div class="two-col">
+    <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone" name="phone" pattern="^\+230[0-9]{8}$" title="Enter your phone number starting with +230 followed by 8 digits." required>
+    <small id="phoneError" style="color:red;"></small>
+
+</div>
+
+<div class="form-group">
+    <label for="service-type">Select Your Service Type</label>
+    <select id="service-type" name="service-type" required>
+        <option value="">Loading Services...</option>
+    </select>
+
+    <small id="serviceError" style="color:red;"></small>
+</div>
+</div>
+
+<div class="two-col">
+    <div class="form-group">
+    <label for="date">Choose Your Date</label>
+    <input type="date" id="date" name="date" required>
+    <small id="dateError" style="color:red;"></small>
+
+</div>
+
+<div class="form-group">
+    <label for="time">Choose Your Time</label>
+    <select id="time" name="time" required>
+        <option value=" " disabled selected></option>
+        <option value="09:00">09:00</option>
+        <option value="10:00">10:00</option>
+        <option value="11:00">11:00</option>
+        <option value="13:00">13:00</option>
+        <option value="14:00">14:00</option>
+        <option value="15:00">15:00</option>
+    </select>
+
+    <small id="timeError" style="color:red;"></small>
+</div>
+</div>
+
+<div class="closing-info">
+    <p>Note: Saturday closing time: 12:30.
+        Closed on Sundays and public holidays.</p>
+
+    <button type="submit" class="booking-btn">Book Your Glow Now</button>
+</div>
+
+</form>
+</div>
+
+
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ <script>
+ $(document).ready(function(){
+
+    //Live Validation
+    $("#bookingForm input, #bookingForm select").on("keyup change", function(){
+
+        let name = $("#name").val().trim();
+        let email = $("#email").val().trim();
+        let phone = $("#phone").val().trim();
+        let service = $("#service-type").val();
+        let date = $("#date").val();
+        let time = $("#time").val();
+
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        let phonePattern = /^\+230[0-9]{8}$/;
+
+        //NAME CHECK
+        if(name === ""){
+            $("#nameError").text("Name is required");
+        } else {
+            $("#nameError").text("");
+        }
+
+        //EMAIL CHECK
+        if(email === ""){
+            $("#emailError").text("Email is required");
+        } else if(!email.match(emailPattern)){
+            $("#emailError").text("Email must be in format: name@example.com");
+        } else {
+            $("#emailError").text("");
+        }
+
+        //PHONE NUMBER CHECK
+        if(phone === ""){
+            $("#phoneError").text("Phone is required");
+        } else if(!phone.match(phonePattern)){
+            $("#phoneError").text("Format must be +230 followed by 8 digits");
+        } else {
+            $("#phoneError").text("");
+        }
+
+        //SERVICE CHECK
+        if(service === ""){
+            $("#serviceError").text("Please select a service");
+        } else {
+            $("#serviceError").text("");
+        }
+
+        //DATE CHECK
+        if(date === ""){
+            $("#dateError").text("Please select a date");
+        } else {
+            $("#dateError").text("");
+        }
+
+        //TIME CHECK
+        if(time === ""){
+            $("#timeError").text("Please select a time");
+        } else {
+            $("#timeError").text("");
+        }
+
+    });
+
+    //PREVENT SUBMIT IF ERRORS EXIST
+     $("#bookingForm").submit(function(e){
+
+        let name = $("#name").val().trim();
+        let email = $("#email").val().trim();
+        let phone = $("#phone").val().trim();
+        let service = $("#service-type").val();
+        let date = $("#date").val();
+        let time = $("#time").val();
+
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        let phonePattern = /^\+230[0-9]{8}$/;
+
+        if(
+            name === "" ||
+            email === "" ||
+            !email.match(emailPattern) ||
+            phone === "" ||
+            !phone.match(phonePattern) ||
+            service === "" ||
+            date === "" ||
+            time === ""
+        ){
+            e.preventDefault(); //stop form submission
+        }
+
+    });
+});
+
+    $(document).ready(function(){
+
+        //Send AJAX request to get services from the database
+
+        $.ajax({
+            url: "getServices.php",
+            method: "GET",
+            dataType: "json",
+
+            //Runs BEFORE request is sent
+            beforeSend: function(){
+                $("#loader").show();  //show loading message
+                $("#service-type").hide();  //hide dropdown while loading
+            },
+
+            //Runs when request is SUCCESSFUL
+            success: function(data){
+                $("#service-type").show();  //show dropdown again
+                if(data.length === 0){     
+                    $("#service-type").html("<option>No Services Available</option>");
+                    return; 
+                }
+
+                //Clear existing dropdown options 
+                $("#service-type").html("");
+
+                //Add default option at the top of dropdown
+                $("#service-type").append(
+                    `<option value="">Select Service</option>`
+                );
+
+                //Loop through each service from database
+                data.forEach(function(service){
+                $("#service-type").append(
+                `<option value="${service.id}">${service.service_name}</option>`
+                );
+                
+            });
+
+            },
+
+            //Runs if there is an error 
+            error: function(){
+            $("#service-type").html(
+            `<option>Error Loading Services</option>`
+            );
+            
+            },
+
+            //Runs AFTER request completes (success or error)
+            complete: function(){
+                $("#loader").hide();  //hide loading message
+            }
+        });
+
+
+
+        //Display success/error messages dynamically
+
+        $("#bookingForm").submit(function(e){
+            e.preventDefault(); //Stop page reload
+
+            console.log($(this).serialize());
+
+            $.ajax({
+                url:"ajaxBookAppointment.php",
+                method:"POST",
+                data: $(this).serialize(), //Get all form data
+                dataType: "json",
+
+                //Runs when server responds successfully
+                success: function(response){
+                    if(response.status === "success"){
+                        $("#formMessage").html(
+                            "<p style='color:green;'>Booking Successful!</p>"
+                        ).show();
+
+                        $("#bookingForm")[0].reset(); //Clear the form after successful submission
+                    } else {
+                        $("#formMessage").html(
+                            "<p style='color:red;'>Something Went Wrong!</p>" //Display error message if booking failed logically
+                        ).show();
+                    }
+                },
+
+                //Runs when AJAX reuqest fails
+                error: function(){
+                    $("#formMessage").html(
+                        "<p style='color:red;'>Server Error. Please Try Again.</p>"
+                    ).show();
+                }
+            });
+        });
+    
+    });
+    
+    </script> 
+</body>
+</html>
